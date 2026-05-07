@@ -136,7 +136,7 @@ ORDER BY
 
 -- 12. Retorna un llistat amb els departaments que no tenen professors/es associats. (nombre)
 
-SELECT nombre 
+SELECT d.nombre 
 FROM departamento d
 WHERE NOT EXISTS (
 	SELECT 1
