@@ -81,13 +81,13 @@ AND p.nif = '26902806M'
 
 -- 8. Retorna un llistat amb el nom de tots els departaments que tenen professors/es que imparteixen alguna assignatura en el Grau en Enginyeria Informàtica (Pla 2015). (nombre)
 
+
 SELECT DISTINCT d.nombre
 FROM profesor p
-WHERE id_profesor IN (
-	SELECT a.id_profesor FROM asignatura a
-    INNER JOIN  grado g ON a.id_grado = g.id
-	WHERE LOWER(g.nombre) like '%ingeniería informática%')
-AND id_departamento IN (SELECT id FROM departamento);
+INNER JOIN departamento d ON p.id_departamento = d.id
+INNER JOIN asignatura a ON a.id_profesor = p.id_profesor
+WHERE a.id_grado = 4;   
+
 
 -- 9. Retorna un llistat amb tots els alumnes que s'han matriculat en alguna assignatura durant el curs escolar 2018/2019. (nombre, apellido1, apellido2)
 
@@ -163,8 +163,7 @@ SELECT DISTINCT d.nombre
 FROM departamento d
 LEFT JOIN profesor p ON p.id_departamento = d.id
 LEFT JOIN asignatura a ON a.id_profesor = p.id_profesor
-LEFT JOIN alumno_se_matricula_asignatura m ON m.id_asignatura = a.id
-WHERE m.id_curso_escolar IS NULL
+WHERE a.id IS NULL
 ;
 
 -- 16. Retorna el nombre total d'alumnes que hi ha. (total)
